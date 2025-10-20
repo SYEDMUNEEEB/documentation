@@ -1,36 +1,97 @@
+# 🌀 react-scrollfix
+
+A tiny React utility that automatically scrolls the page to the top whenever the route changes — ideal for single-page apps using **React Router**.
+
 ---
-title: About package README files
+
+## 🚀 Install
+
+```bash
+npm install react-scrollfix
+```
+
+or
+
+```bash
+yarn add react-scrollfix
+```
+
 ---
 
-We highly recommend including a `README.md` file in your package directory as it helps developers find your package on npm and have a good experience using your code in their projects. In most cases `README.md` files include directions for _installing_, _configuring_, and _using_ the code in your package; as well as any other information a user may find helpful. Just like in any GitHub repository, the `README.md` file will be rendered on the package's page.
+## 💡 Usage
 
-An npm package `README.md` file **must** be in the root-level directory of the package.
+Place `<ScrollFix />` inside your main router so it runs on every route change.
 
-## Creating and adding a `README.md` file to a package
+```jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import ScrollFix from "react-scrollfix";
 
-1. In a text editor, in your package root directory, create a file called `README.md`.
-2. In the `README.md` file, add useful information about your package.
-3. Save the `README.md` file.
+function Home() {
+  return (
+    <div style={{ height: "200vh" }}>
+      <h2>Home Page</h2>
+      <p>Scroll down, then navigate to test ScrollFix.</p>
+    </div>
+  );
+}
 
-<Note>
+function About() {
+  return (
+    <div style={{ height: "200vh" }}>
+      <h2>About Page</h2>
+      <p>ScrollFix resets scroll position automatically!</p>
+    </div>
+  );
+}
 
-**Note:** The file extension `.md` indicates a Markdown file. For more information about Markdown, see the GitHub Guide "[Mastering Markdown](https://guides.github.com/features/mastering-markdown/#what)".
+export default function App() {
+  return (
+    <Router>
+      <ScrollFix />
 
-</Note>
+      <nav style={{ position: "fixed", top: 0, background: "#fff", width: "100%", padding: "10px" }}>
+        <Link to="/" style={{ marginRight: "10px" }}>Home</Link>
+        <Link to="/about">About</Link>
+      </nav>
 
-## Updating an existing package `README.md` file
+      <div style={{ marginTop: "60px" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+```
 
-The `README.md` file will only be updated on the package page when you publish a new version of your package. To update your `README.md` file:
+✅ When you change routes, the page scrolls back to the top automatically.
 
-1. In a text editor, update the contents of the `README.md` file.
+---
 
-2. Save the `README.md` file.
+## ⚙️ API
 
-3. On the command line, in the package root directory, run the following commands:
+### `<ScrollFix />`
 
-   ```
-   npm version patch
-   npm publish
-   ```
+No props required.
 
-[markdown-link]: https://guides.github.com/features/mastering-markdown/#what
+* **Automatically** detects route changes via `useLocation`
+* Triggers `window.scrollTo(0, 0)` on every navigation
+
+---
+
+## 🧱 Requirements
+
+* React ≥ 16.8
+* react-router-dom ≥ 6.0
+
+---
+
+## 📄 License
+
+MIT © [Your Name]
+
+---
+
+⭐ If this package helped you, consider giving it a star on GitHub!
